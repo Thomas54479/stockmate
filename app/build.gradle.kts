@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bse3340.stockmate"
+    namespace = "stockmate"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.bse3340.stockmate"
+        applicationId = "stockmate"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "com.bse3330.stockmate"
+rootProject.name = "stockmate"
 include(":app")
  
