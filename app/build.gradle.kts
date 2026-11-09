@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.stockmate"
+    namespace = "com.bse3340.stockmate"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -12,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.com.bse3330.stockmate"
+        applicationId = "com.bse3340.stockmate"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -42,12 +43,26 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    // Navigation between screens
+    implementation(libs.androidx.navigation.compose)
+
+    // Local database (Room) - KSP generates the database code
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // Research topic 1: background work for low-stock notifications
+    implementation(libs.androidx.work.runtime.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
