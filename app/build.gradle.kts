@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
 }
 
 android {
@@ -55,10 +54,9 @@ dependencies {
     // Navigation between screens
     implementation(libs.androidx.navigation.compose)
 
-    // Local database (Room) - KSP generates the database code
+    // Local database (Room)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler)
 
     // Research topic 1: background work for low-stock notifications
     implementation(libs.androidx.work.runtime.ktx)
