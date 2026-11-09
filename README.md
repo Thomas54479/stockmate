@@ -1,8 +1,8 @@
 # StockMate
 
-StockMate is an Android application for managing stock, recording sales, viewing sales summaries, and receiving low-stock notifications.
+StockMate is an Android application designed to help small traders manage stock, record sales, view sales summaries, and receive low-stock notifications.
 
-## Project structure
+## Project Structure
 
 ```text
 stockmate/
@@ -41,7 +41,7 @@ stockmate/
 
 ## Architecture
 
-The application follows an MVVM-style structure:
+StockMate follows an MVVM-style architecture:
 
 ```text
 Jetpack Compose UI
@@ -50,131 +50,160 @@ StockViewModel
         ↓
 StockDao
         ↓
-Room database
+Room Database
 ```
 
-- `ui/` contains the Compose screens and reusable UI helpers.
-- `viewmodel/` exposes observable state and coordinates user actions.
-- `data/` contains Room entities, the database singleton, and DAO operations.
-- `notifications/` contains the WorkManager worker for low-stock alerts.
-- `MainActivity.kt` starts the app, requests notification permission, schedules the worker, and defines navigation.
+- **UI:** Jetpack Compose screens and reusable UI components.
+- **ViewModel:** Application state and user actions.
+- **Data:** Room entities, database configuration, and DAO operations.
+- **Notifications:** WorkManager worker for low-stock checks.
+- **MainActivity:** Application startup, navigation, notification permission, and background-work scheduling.
 
-## Implemented features
+## Implemented Features
 
 - Add, edit, and delete stock items.
 - Validate item names, quantities, prices, and low-stock limits.
-- Display stock quantities and low-stock warnings.
-- Record sales and reduce stock in one Room transaction.
+- Display available stock and low-stock warnings.
+- Record sales and automatically reduce stock.
 - Prevent invalid sales and sales exceeding available stock.
-- Display today's sales and total.
+- Store sales and update stock transactionally.
+- Display today's sales and total sales amount.
 - Display sales totals for the last seven days.
-- Display a custom Compose bar chart.
-- Run daily and post-sale low-stock checks.
+- Display a custom weekly sales bar chart using Jetpack Compose.
+- Schedule daily and post-sale low-stock checks.
 - Request notification permission on Android 13 and later.
 
-## Data storage
+## Data Storage
 
-Room stores data locally in `stock.db`.
+StockMate uses Room for local database storage. The database is named `stock.db`.
 
-### `Item`
+### Item
 
 Stores the item ID, name, quantity, unit price, and low-stock limit.
 
-### `Sale`
+### Sale
 
-Stores the sale ID, item ID, item name, quantity, total amount, and timestamp.
+Stores the sale ID, item ID, item name, quantity sold, total sale amount, and sale timestamp.
 
-`Sale.itemId` refers to the corresponding item ID conceptually. There is no explicit Room foreign-key declaration. The sale also stores the item name so historical sale information remains readable if an item is deleted.
+The sale record stores the item name so historical sales remain readable if an item is deleted. There is currently no explicit Room foreign-key relationship between the `Item` and `Sale` entities.
 
 ## Technologies
 
 - Kotlin `2.2.21`
 - Android Gradle Plugin `9.0.1`
-- Jetpack Compose and Material 3
-- AndroidX Activity, Lifecycle, and Navigation Compose
+- Jetpack Compose
+- Material 3
+- AndroidX Activity and Lifecycle
+- Navigation Compose `2.9.0`
 - Room `2.8.4`
 - Kotlin Symbol Processing (KSP)
 - WorkManager `2.10.0`
 - Gradle Wrapper
-- Java 11 source and target compatibility
+- Java 11 compatibility
 
-The project is configured for compile SDK 36, target SDK 36, and minimum SDK 24.
+Project SDK configuration:
 
-## Setup and usage
+- Compile SDK: 36
+- Target SDK: 36
+- Minimum SDK: 24
+
+## Setup and Usage
 
 ### Requirements
 
 - Android Studio
 - Android SDK
-- A compatible JDK
-- An Android emulator or physical Android device
+- Compatible JDK
+- Android emulator or physical Android device
 
-### Open the project
+### Open the Project
 
 1. Open Android Studio.
 2. Select **Open**.
-3. Choose the repository root.
-4. Allow Gradle synchronization to finish.
+3. Choose the StockMate repository folder.
+4. Allow Gradle synchronization to complete.
 5. Start an emulator or connect an Android device.
 6. Run the `app` configuration.
 
-### Build from PowerShell
+### Build the Application
+
+From PowerShell, run:
 
 ```powershell
 .\gradlew.bat :app:assembleDebug
 ```
 
-### Run available tests
+### Run Tests
 
 ```powershell
 .\gradlew.bat test
 .\gradlew.bat connectedAndroidTest
 ```
 
-The project currently declares testing dependencies but does not contain test source files. Automated test coverage therefore has not been established.
+Testing dependencies are configured, but automated unit and UI test source files have not yet been added. Test coverage has therefore not been established.
 
-## Current build status
+## Application Workflow
 
-KSP source generation is enabled through the `android.disallowKotlinSourceSets=false` Gradle property. This is required by the current Android Gradle Plugin and KSP combination because KSP adds generated sources to the built-in Kotlin source sets.
+1. The application opens on the stock list.
+2. The trader can add a new stock item.
+3. Existing items can be edited or deleted.
+4. The trader selects an item and records a sale.
+5. Stock quantities are automatically updated after a successful sale.
+6. The Summary screen displays daily sales and the weekly chart.
+7. WorkManager performs low-stock checks and can trigger notifications.
 
-Run the debug build command above to verify the local Android SDK and JDK installation. Build output is generated under `app/build/` and is not part of the source tree.
+## Remaining Work
 
-## Application workflow
+The following tasks still need to be completed and verified:
 
-1. The app opens on the stock list.
-2. Use **Add** to create an item.
-3. Tap an item to edit it, or use the delete action to remove it.
-4. Use **Sell** to select an item and record a quantity sold.
-5. The app updates stock and stores the sale transactionally.
-6. Use **Summary** to view today's sales and the seven-day chart.
-7. WorkManager checks for items at or below their configured low-stock limits and can show a notification.
+1. **Build configuration:** Resolve any remaining Gradle configuration issues and confirm that the application builds successfully.
+2. **Unit testing:** Add tests for stock management and sales operations.
+3. **Database testing:** Add tests for Room database operations and data integrity.
+4. **Application testing:** Test the screens, stock management, and sales workflow on an emulator or physical device.
+5. **Notification testing and team contributions:** Verify low-stock notifications and document each member's individual contribution.
 
-## Team information
+## Current Verification Status
 
-The original project documentation listed the following team members:
+The project has undergone Gradle/KSP configuration work. However, a successful build and a complete application run must still be confirmed.
 
-- Thomas Phiri
-- Elijah Nonde
-- Emmanuel Mwamba
-- Sibon'gile Tembo
-- Nseko Lombe
+The debug APK is generated under:
 
-Individual responsibilities are not documented in the repository and should be confirmed by the team.
+```text
+app/build/outputs/apk/debug/
+```
 
-## Scope and limitations
+Build verification command:
 
-The repository does not currently contain evidence of:
+```powershell
+.\gradlew.bat :app:assembleDebug
+```
+
+## Project Team
+
+| Team Member | Student ID | Responsibility |
+|---|---:|---|
+| Thomas Phiri | 2420995 | To be confirmed |
+| Elijah Nonde | 2420934 | To be confirmed |
+| Emmanuel Mwamba | 2420928 | To be confirmed |
+| Sibon’gile Tembo | 2410291 | To be confirmed |
+| Nseko Lombe | 2200020 | To be confirmed |
+
+Individual responsibilities should be confirmed and updated by the team.
+
+## Scope and Limitations
+
+The current project does not include:
 
 - User authentication or accounts.
 - Cloud synchronization.
 - Online backup.
 - Multi-user support.
-- Exported reports.
-- Automated unit or UI tests.
-- Database migration versions beyond Room schema version 1.
+- Exportable reports.
+- Automated unit or UI test coverage.
+- Database migration testing beyond the current schema version.
 
-## Version control
+## Version Control
 
-The project uses Git and is hosted at:
+The project uses Git for version control and GitHub for source code hosting.
 
-https://github.com/Thomas54479/stockmate
+Repository: https://github.com/Thomas54479/stockmate
