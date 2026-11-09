@@ -180,15 +180,13 @@ Build verification command:
 
 ## Project Team
 
-| Team Member | Student ID | Responsibility |
-|---|---:|---|
-| Thomas Phiri | 2420995 | To be confirmed |
-| Elijah Nonde | 2420934 | To be confirmed |
-| Emmanuel Mwamba | 2420928 | To be confirmed |
-| Sibon’gile Tembo | 2410291 | To be confirmed |
-| Nseko Lombe | 2200020 | To be confirmed |
-
-Individual responsibilities should be confirmed and updated by the team.
+| Team Member | Student ID |
+|---|---:|
+| Thomas Phiri | 2420995 |
+| Elijah Nonde | 2420934 |
+| Emmanuel Mwamba | 2420928 |
+| Sibon’gile Tembo | 2410291 |
+| Nseko Lombe | 2200020 |
 
 ## Scope and Limitations
 
