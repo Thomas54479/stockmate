@@ -1,0 +1,14 @@
+1) Copy the files into app/src/main/java/com/bse3340/stockmate/ (replace the generated MainActivity.kt).
+   Put your 3 data files in the "data" folder of that package (Entities.kt, StockDao.kt, AppDatabase.kt)
+   and change their package line to: package com.bse3340.stockmate.data
+
+2) app/build.gradle.kts -> inside the existing dependencies { } add:
+    implementation("androidx.navigation:navigation-compose:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+    implementation("androidx.work:work-runtime-ktx:2.9.1")
+
+3) AndroidManifest.xml -> above <application> add:
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+4) Sync Now, then Run.
